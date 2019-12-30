@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sea_level: 1.5
+  state: MyString
+  datetime: 2019-12-29 12:24:55
+  user: one
+  location: one
+
+two:
+  sea_level: 1.5
+  state: MyString
+  datetime: 2019-12-29 12:24:55
+  user: two
+  location: two
