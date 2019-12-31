@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # resources :user_locations
   get '/tides' => 'user_locations#index'
+  post '/create' => 'user_locations#create'
   # resources :locations
   post '/location' => 'locations#create'
   # resources :users

@@ -22,3 +22,10 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+
+## Challenges
+
+- passing data through url in get request to persist data.
+- adding data persistence after the fact
+- passing several params(pass objects next time)
