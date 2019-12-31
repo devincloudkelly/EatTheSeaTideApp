@@ -49,11 +49,6 @@ function fetchTides(json, tide, tideHeight) {
             persistTides(tides, json.id)
             makeLocationCard(json.name, json.id, tides)
         })
-                // .then(tides => {
-                // })
-        // .then(tides => {
-        //     console.log('this is the "tides" I will pass to persistTides', tides)
-        // })
 }
 
 // filter json data to only show tides that match the user's tide height threshold
