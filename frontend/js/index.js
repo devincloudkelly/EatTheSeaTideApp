@@ -41,19 +41,24 @@ function findOrCreateLocation(locName, lat, long, tide, tideHeight){
 
 // fetch tides for lat and long passed through form
 function fetchTides(json, tide, tideHeight) {
-    // console.log('4. this is the tide passed in to fetchTides...', tide)
+    console.log('4. this is the json passed in to fetchTides...', json.lat, json.long)
     return fetch(`http://localhost:3000/tides?lat=${json.lat}&long=${json.long}`) 
         .then((resp) => resp.json())
-        .then(data => findMatchingTides(data.extremes, tide, tideHeight))
-        .then(tides => {
-            // console.log('this is the "tides" I will pass to persistTides', tides)
+        .then(data => { 
+            let tides = findMatchingTides(data.extremes, tide, tideHeight)
             persistTides(tides, json.id)
-            makeLocationCard(json.name, json.id, tides)})
+            makeLocationCard(json.name, json.id, tides)
+        })
+                // .then(tides => {
+                // })
+        // .then(tides => {
+        //     console.log('this is the "tides" I will pass to persistTides', tides)
+        // })
 }
 
 // filter json data to only show tides that match the user's tide height threshold
 function findMatchingTides(json, tide, tideHeight) {
-    // console.log('5. this is the tide in find matching tides...', tide)
+    console.log('5. this is the json in find matching tides...', json)
 const userTides = json.filter(extreme => extreme.state === tide.split('-').join(' ').toUpperCase())
     if (tide === "low-tide"){
         const lowTides = userTides.filter(tide => tide.height <= tideHeight)
@@ -111,16 +116,19 @@ function populateTides(tides, locId){
 }
 
 function persistTides(tides, locId){
-    tides.forEach(tide => {
-        console.log
+    tides.forEach(function(tide) {
+        console.log(tides)
         const seaLevel = tide.height * 3.2808
-        fetch('http://localhost:3000//create', {
+        fetch('http://localhost:3000/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Accepts': 'application/json'
             },
             body: JSON.stringify({
+                // tides: tides,
+                // loc_id: locId,
+                // user_id: 1
                 sea_level: seaLevel,
                 state: tide.state,
                 datetime: tide.datetime,
