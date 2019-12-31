@@ -44,14 +44,18 @@ const userTides = json.filter(extreme => extreme.state === tide.split('-').join(
 // create location card
 function makeLocationCard(locName, tides) {
     const locCardContainer = document.querySelector('#location-card-container')
-    const ul = document.createElement('ul')
-    ul.classList.add('location-card')
-    ul.textContent = locName
-    locCardContainer.appendChild(ul)
+    const div = document.createElement('div')
+    div.classList.add('location-card')
+    div.textContent = locName
+    locCardContainer.appendChild(div)
 }
 
 function populateTides(tides){
+    tides.forEach(tide => {
+        const li = document.createElement('li')
+        const li = document.createElement('li')
 
+    })
 }
 
 //function to persist location in database if not already there
