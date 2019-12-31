@@ -15,8 +15,7 @@ function tideFormSubmission(e) {
     const locName = e.target['loc-name'].value
     const tide = e.target['tide-type'].value
     const tideHeight = e.target['tide-height'].value
-    fetchTides(lat, long ,tide, tideHeight)
-    
+    makeLocationCard(locName, fetchTides(lat, long ,tide, tideHeight))
 }
 
 // fetch tides for lat and long passed through form
@@ -24,24 +23,38 @@ function fetchTides(lat, long, tide, tideHeight) {
     return fetch(`http://localhost:3000/tides?lat=${lat}&long=${long}`) 
         .then((resp) => resp.json())
         .then(data => findMatchingTides(data.extremes, tide, tideHeight))
-        // .then(data => findMatchingTides(data["extremes"], tide, tideHeight))
 }
 
 // filter json data to only show tides that match the user's tide height threshold
 function findMatchingTides(json, tide, tideHeight) {
-    console.log('this is json', json)
 const userTides = json.filter(extreme => extreme.state === tide.split('-').join(' ').toUpperCase())
-// console.log('user tides variable', userTides)
     if (tide === "low-tide"){
-        console.log('returned low tide')
         const lowTides = userTides.filter(tide => tide.height <= tideHeight)
         console.log(lowTides)
         return lowTides
     } 
     if (tide === "high-tide") {
-        console.log('returned high tide')
         const highTides = userTides.filter(tide => tide.height >= tideHeight)
         console.log(highTides)
         return highTides
     }
+    // need to add use case where no matching tides come back. 
 }
+
+// create location card
+function makeLocationCard(locName, tides) {
+    const locCardContainer = document.querySelector('#location-card-container')
+    const ul = document.createElement('ul')
+    ul.classList.add('location-card')
+    ul.textContent = locName
+    locCardContainer.appendChild(ul)
+}
+
+function populateTides(tides){
+
+}
+
+//function to persist location in database if not already there
+// function findOrCreateLocation(locName, lat, long){
+
+// }
