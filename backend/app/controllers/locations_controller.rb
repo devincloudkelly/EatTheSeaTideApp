@@ -1,7 +1,7 @@
 class LocationsController < ApplicationController
 
     def create
-        location = Location.create(name: params[:locName], lat: params[:lat].to_f, long: params[:long].to_f)
+        location = Location.create_with(lat: params[:lat].to_f, long: params[:long].to_f).find_or_create_by(name: params[:name])
         render json: location
     end
 end
