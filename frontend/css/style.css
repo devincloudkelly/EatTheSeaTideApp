@@ -1,3 +1,7 @@
+.location-card-container{
+    display: block;
+}
+
 .location-card {
     border-style: solid; 
     border-width: 1px;
