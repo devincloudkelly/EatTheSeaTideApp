@@ -45,9 +45,9 @@ function fetchTides(json, tide, tideHeight) {
     return fetch(`http://localhost:3000/tides?lat=${json.lat}&long=${json.long}`) 
         .then((resp) => resp.json())
         .then(data => { 
-            let tides = findMatchingTides(data.extremes, tide, tideHeight)
-            persistTides(tides, json.id)
-            makeLocationCard(json.name, json.id, tides)
+            let tides = findMatchingTides(data.extremes, tide, tideHeight);
+            persistTides(tides, json.id);
+            makeLocationCard(json.name, json.id, tides);
         })
 }
 
@@ -111,9 +111,7 @@ function populateTides(tides, locId){
 }
 
 function persistTides(tides, locId){
-    tides.forEach(function(tide) {
         console.log(tides)
-        const seaLevel = tide.height * 3.2808
         fetch('http://localhost:3000/create', {
             method: 'POST',
             headers: {
@@ -121,17 +119,16 @@ function persistTides(tides, locId){
                 'Accepts': 'application/json'
             },
             body: JSON.stringify({
-                // tides: tides,
-                // loc_id: locId,
-                // user_id: 1
-                sea_level: seaLevel,
-                state: tide.state,
-                datetime: tide.datetime,
-                user_id: 1,
-                location_id: locId
+                tides: tides,
+                loc_id: locId,
+                user_id: 1
+                // sea_level: seaLevel,
+                // state: tide.state,
+                // datetime: tide.datetime,
+                // user_id: 1,
+                // location_id: locId
             })
         })
-        .then(resp => console.log('1. this is the tide persistence response...', resp.json()))
+        .then(resp => resp.json())
         .then(json => console.log('2. this is the tide persistence response...', json))
-    })
 }
