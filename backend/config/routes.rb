@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   # resources :user_locations
   get '/tides' => 'user_locations#index'
   post '/create' => 'user_locations#create'
-  delete '/delete/:id' => 'user_locations#delete'
+  delete '/delete/:id' => 'user_locations#destroy'
   # resources :locations
   post '/location' => 'locations#create'
   # resources :users
