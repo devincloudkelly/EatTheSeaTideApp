@@ -75,41 +75,20 @@ function makeLocationCard(locName, locId, tides) {
     const div = document.createElement('div')
     div.classList.add('location-card')
     div.id = `loc-${locId}`
+
     const h2 = document.createElement('h2')
     h2.textContent = locName
-    div.appendChild(h2)
-    locCardContainer.appendChild(div)
-    populateTides(tides, locId)
-}
 
-// populates the matching tide instances in a location card
-function populateTides(tides, locId){
-    console.log('this is for populating tides in cards', tides)
-    const tideDiv = document.querySelector(`#loc-${locId}`)
     const h3 = document.createElement('h3')
     h3.textContent = 'Optimal Tides this week: '
-    tideDiv.appendChild(h3)
 
-    tides.forEach(tide => {
-        const ul = document.createElement('ul')
-
-        const seaLevel = document.createElement('li')
-        //remove the metric conversion once tide persistence is in place. leave the 2 decimal fixing.
-        seaLevel.textContent = `Tide Height: ${(tide.height * 3.2808).toFixed(2)}`
-
-        const tideState = document.createElement('li')
-        tideState.textContent = tide.state
-
-        const tideDate = document.createElement('li')
-        tideDate.textContent = new Date(tide.datetime)
-
-        ul.appendChild(seaLevel)
-        ul.appendChild(tideState)
-        ul.appendChild(tideDate)
-        tideDiv.appendChild(ul)
-    })
+    div.appendChild(h2)
+    div.appendChild(h3)
+    locCardContainer.appendChild(div)
+    // populateTides(tides, locId)
 }
 
+// persist tides to the database
 function persistTides(tides, locId){
     tides.forEach(tide => {
         console.log
@@ -128,7 +107,71 @@ function persistTides(tides, locId){
                 location_id: locId
             })
         })
-        .then(resp => console.log('1. this is the tide persistence response...', resp.json()))
-        .then(json => console.log('2. this is the tide persistence response...', json))
+        .then(resp => resp.json())
+        .then(json => populateTides(json))
     })
 }
+
+// new populate tides for individual instances
+function populateTides(tide){
+    console.log('this is for populating tides in cards', tide)
+    const tideDiv = document.querySelector(`#loc-${tide.location_id}`)
+    
+    const ul = document.createElement('ul')
+    
+    const seaLevel = document.createElement('li')
+    seaLevel.textContent = `Tide Height: ${tide.sea_level.toFixed(2)} feet`
+    
+    const tideState = document.createElement('li')
+    tideState.textContent = tide.state
+    
+    const tideDate = document.createElement('li')
+    tideDate.textContent = new Date(tide.datetime)
+
+    const deleteBtn = document.createElement('button')
+    deleteBtn.textContent = 'Remove this tide'
+    deleteBtn.id = tide.id
+    deleteBtn.addEventListener('click', (e) => {
+        const tideId = e.target.id
+        fetch(`http://localhost:3000/delete/${tideId}`,{
+            method: 'DELETE'
+        })
+        e.target.parentNode.remove()
+    })
+    
+    ul.appendChild(seaLevel)
+    ul.appendChild(tideState)
+    ul.appendChild(tideDate)
+    ul.appendChild(deleteBtn)
+    tideDiv.appendChild(ul)
+}
+
+
+
+// populates the matching tide instances in a location card
+// function populateTides(tides, locId){
+//     console.log('this is for populating tides in cards', tides)
+//     const tideDiv = document.querySelector(`#loc-${locId}`)
+//     const h3 = document.createElement('h3')
+//     h3.textContent = 'Optimal Tides this week: '
+//     tideDiv.appendChild(h3)
+
+//     tides.forEach(tide => {
+//         const ul = document.createElement('ul')
+
+//         const seaLevel = document.createElement('li')
+//         //remove the metric conversion once tide persistence is in place. leave the 2 decimal fixing.
+//         seaLevel.textContent = `Tide Height: ${(tide.height * 3.2808).toFixed(2)}`
+
+//         const tideState = document.createElement('li')
+//         tideState.textContent = tide.state
+
+//         const tideDate = document.createElement('li')
+//         tideDate.textContent = new Date(tide.datetime)
+
+//         ul.appendChild(seaLevel)
+//         ul.appendChild(tideState)
+//         ul.appendChild(tideDate)
+//         tideDiv.appendChild(ul)
+//     })
+// }
