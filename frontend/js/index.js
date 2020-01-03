@@ -136,6 +136,7 @@ function populateTides(tide){
     const tideDiv = document.querySelector(`#loc-${tide.location_id}`)
     
     const ul = document.createElement('ul')
+    ul.classList.add('tide-ul')
     
     const seaLevel = document.createElement('li')
     seaLevel.textContent = `Tide Height: ${tide.sea_level.toFixed(2)} feet`

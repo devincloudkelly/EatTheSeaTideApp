@@ -8,7 +8,7 @@ nav{
     margin: 0px;
 }
 
-h2{
+h2, h3, ul{
     font-family: 'Montserrat', sans-serif
 }
 
@@ -16,7 +16,7 @@ h4{
     font-family: 'Lora', serif;
 }
 
-p {
+p, li {
     font-family: 'Hind Madurai', sans-serif
 }
 
@@ -24,6 +24,59 @@ input, label, select, option, button{
     font-family: 'Hind Madurai', sans-serif
 }
 
+input{
+    padding: 8px;
+    margin: 5px;
+    
+}
+
+input[type=text]:focus {
+    border: 2px solid rgb(153, 153, 153);
+  }
+
+#location-input{
+    width: 92%;
+}
+
+#lat-input{
+    width: 42%;
+}
+
+#long-input{
+    width: 42%;
+}
+
+select{
+    width: 35%;
+    padding: 30px;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+}
+
+.tide-ul{
+    padding: 3px;
+    margin-bottom: 3px;
+}
+
+#form-submit{
+    color: #fff !important;
+    width: 50%;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #3cced8;
+    padding: 8px;
+    margin: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    transition: all 0.4s ease 0s;
+}
+
+#tide-input{
+    width: 42%;
+}
 .ul-nav{
     list-style-type: none;
     margin: 0;
@@ -31,8 +84,11 @@ input, label, select, option, button{
     justify-self: center;
 }
 
-.li-nav{
-
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-self: center;
 }
 
 main {
@@ -42,8 +98,9 @@ main {
     grid-row-gap: 2em;
     grid-column-gap: 1em;
     /* font-family: 'Hind Madurai', sans-serif;  */
-    margin-top: 1em;
+    margin-top: 2em;
 }
+
 
 #tide-search {
     grid-column: 3 / 4;
@@ -77,10 +134,9 @@ main {
 .location-card {
     /* grid-area: location-card; */
     padding: 5px;
-    border-radius: 12px;
+    border-radius: 6px;
     border-width: 3px;
     border-style: solid; 
-    border-width: 1px;
     border-color: cornflowerblue;
     justify-self: stretch;
     align-self: start;
@@ -95,7 +151,7 @@ main {
     text-transform: uppercase;
     text-decoration: none;
     background: #ed3330;
-    padding: 10px;
+    padding: 8px;
     border-radius: 5px;
     display: inline-block;
     border: none;
