@@ -1,27 +1,16 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Description
 
-Things you may want to cover:
+This app is intended to allow users to enter a location (coordinates and name) and a desired tide height, and it will populate favorable tides for that location for the upcoming week. 
 
-* Ruby version
+Instructions
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Fork and clone this repository
+- run 'bundle install'
+- launch rails server with 'rails s'
+- open the index page from your terminal with 'open frontend/index.html'
+- Search tides at your favorite placess
 
 
 ## Challenges
@@ -30,3 +19,4 @@ Things you may want to cover:
 - adding data persistence after the fact
 - passing several params(pass objects next time)
 - concurrency in databases. (max threads, dynos, workers, timeouts)
+- migrating from sqlite3 to PostgreSQL

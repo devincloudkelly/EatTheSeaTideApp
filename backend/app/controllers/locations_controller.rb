@@ -6,7 +6,6 @@ class LocationsController < ApplicationController
     end
 
     def destroy
-        byebug
         Location.destroy(params[:id])
     end
 end

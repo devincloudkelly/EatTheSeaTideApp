@@ -22,7 +22,7 @@ function tideFormSubmission(e) {
 // function to persist location in database if not already there
 function findOrCreateLocation(locName, lat, long, tide, tideHeight){
     // console.log('3. this is "tide" in Finding or creating by...', tide)
-    fetch(`http://localhost:3000/location`, {
+    fetch(`http://localhost:3000/locations`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ function findOrCreateLocation(locName, lat, long, tide, tideHeight){
 // fetch tides for lat and long passed through form
 function fetchTides(json, tide, tideHeight) {
     // console.log('4. this is the tide passed in to fetchTides...', tide)
-    return fetch(`http://localhost:3000/tides?lat=${json.lat}&long=${json.long}`) 
+    return fetch(`http://localhost:3000/userlocations?lat=${json.lat}&long=${json.long}`) 
         .then((resp) => resp.json())
         .then(data => findMatchingTides(data.extremes, tide, tideHeight))
         .then(tides => {
@@ -89,8 +89,9 @@ function makeLocationCard(locName, locId, tides) {
     deleteBtn.addEventListener('click', (e) => {
         const cardId = e.target.id
         console.log('this is cardId', cardId)
-        fetch(`http://localhost:3000/location/${cardId}`,{
+        fetch(`http://localhost:3000/locations/${cardId}`,{
             method: 'DELETE'
+            // mode: 'no-cors'
         })
         .then(resp => resp.json())
         .then(data => console.log(data))
@@ -114,7 +115,7 @@ function persistTides(tides, locId){
     tides.forEach(tide => {
         console.log
         const seaLevel = tide.height * 3.2808
-        fetch('http://localhost:3000//create', {
+        fetch('http://localhost:3000/userlocations', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -155,8 +156,9 @@ function populateTides(tide){
     deleteBtn.id = tide.id
     deleteBtn.addEventListener('click', (e) => {
         const tideId = e.target.id
-        fetch(`http://localhost:3000/delete/${tideId}`,{
+        fetch(`http://localhost:3000/userlocations/${tideId}`,{
             method: 'DELETE'
+            // mode: 'no-cors'
         })
         .then(resp => resp.json())
         .then(data => console.log(data))
