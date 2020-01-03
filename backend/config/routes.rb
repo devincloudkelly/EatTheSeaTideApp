@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   delete '/delete/:id' => 'user_locations#destroy'
   # resources :locations
   post '/location' => 'locations#create'
+  delete '/location/:id' => 'locations#destroy'
   # resources :users
     get '/' => 'users#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

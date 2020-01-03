@@ -83,10 +83,27 @@ function makeLocationCard(locName, locId, tides) {
     h3.textContent = 'Optimal Tides this week: '
 
     const deleteBtn = document.createElement('button')
+    deleteBtn.classList.add('delete-loc-button')
+    deleteBtn.textContent = 'Remove this location'
+    deleteBtn.id = locId
+    deleteBtn.addEventListener('click', (e) => {
+        const cardId = e.target.id
+        console.log('this is cardId', cardId)
+        fetch(`http://localhost:3000/location/${cardId}`,{
+            method: 'DELETE'
+        })
+        .then(resp => resp.json())
+        .then(data => console.log(data))
+
+        const locCard = document.querySelector(`#loc-${cardId}`)
+        console.log('this is locCard', locCard)
+        locCard.remove()
+    })
     // finish creating card delete button
     // set location model so that dependent data gets destroyed when it gets destroyed.
 
     div.appendChild(h2)
+    div.appendChild(deleteBtn)
     div.appendChild(h3)
     locCardContainer.appendChild(div)
     // populateTides(tides, locId)
@@ -133,7 +150,7 @@ function populateTides(tide){
     tideDate.textContent = new Date(tide.datetime)
 
     const deleteBtn = document.createElement('button')
-    deleteBtn.classList.add('delete-button')
+    deleteBtn.classList.add('delete-tide-button')
     deleteBtn.textContent = 'Remove this tide'
     deleteBtn.id = tide.id
     deleteBtn.addEventListener('click', (e) => {
