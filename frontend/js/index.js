@@ -21,7 +21,6 @@ function tideFormSubmission(e) {
 
 // function to persist location in database if not already there
 function findOrCreateLocation(locName, lat, long, tide, tideHeight){
-    // console.log('3. this is "tide" in Finding or creating by...', tide)
     fetch(`http://localhost:3000/locations`, {
         method: 'POST',
         headers: {
@@ -41,19 +40,17 @@ function findOrCreateLocation(locName, lat, long, tide, tideHeight){
 
 // fetch tides for lat and long passed through form
 function fetchTides(json, tide, tideHeight) {
-    // console.log('4. this is the tide passed in to fetchTides...', tide)
     return fetch(`http://localhost:3000/userlocations?lat=${json.lat}&long=${json.long}`) 
         .then((resp) => resp.json())
+        //add in logic-gate in case data returned is null
         .then(data => findMatchingTides(data.extremes, tide, tideHeight))
         .then(tides => {
-            // console.log('this is the "tides" I will pass to persistTides', tides)
             persistTides(tides, json.id)
             makeLocationCard(json.name, json.id, tides)})
 }
 
 // filter json data to only show tides that match the user's tide height threshold
 function findMatchingTides(json, tide, tideHeight) {
-    // console.log('5. this is the tide in find matching tides...', tide)
 const userTides = json.filter(extreme => extreme.state === tide.split('-').join(' ').toUpperCase())
     if (tide === "low-tide"){
         const lowTides = userTides.filter(tide => tide.height <= tideHeight)
@@ -65,13 +62,15 @@ const userTides = json.filter(extreme => extreme.state === tide.split('-').join(
         console.log('these are high tides', highTides)
         return highTides
     }
-    // need to add use case where no matching tides come back. 
+    // } else {
+    //     alert('Uh-oh, looks like your location is too far from nearby tide data or your tide threshold is too high. \nPlease adjust your search and try again.')
+    // }
 }
 
 // create location card
 function makeLocationCard(locName, locId, tides) {
-    // console.log('making location card...')
     const locCardContainer = document.querySelector('#location-card-container')
+    
     const div = document.createElement('div')
     div.classList.add('location-card')
     div.id = `loc-${locId}`
@@ -82,6 +81,7 @@ function makeLocationCard(locName, locId, tides) {
     const h3 = document.createElement('h3')
     h3.textContent = 'Optimal Tides this week: '
 
+    //delete button used to delete entire card instance from front and backend
     const deleteBtn = document.createElement('button')
     deleteBtn.classList.add('delete-loc-button')
     deleteBtn.textContent = 'Remove this location'
@@ -91,23 +91,19 @@ function makeLocationCard(locName, locId, tides) {
         console.log('this is cardId', cardId)
         fetch(`http://localhost:3000/locations/${cardId}`,{
             method: 'DELETE'
-            // mode: 'no-cors'
         })
-        .then(resp => resp.json())
-        .then(data => console.log(data))
+        .then(resp => console.log(resp))
+        //this returns a 2-4 if the data is deleted correctly. Can use this to pessimistically render the deletion below
 
         const locCard = document.querySelector(`#loc-${cardId}`)
         console.log('this is locCard', locCard)
         locCard.remove()
     })
-    // finish creating card delete button
-    // set location model so that dependent data gets destroyed when it gets destroyed.
 
     div.appendChild(h2)
     div.appendChild(deleteBtn)
     div.appendChild(h3)
     locCardContainer.appendChild(div)
-    // populateTides(tides, locId)
 }
 
 // persist tides to the database
@@ -158,10 +154,10 @@ function populateTides(tide){
         const tideId = e.target.id
         fetch(`http://localhost:3000/userlocations/${tideId}`,{
             method: 'DELETE'
-            // mode: 'no-cors'
         })
-        .then(resp => resp.json())
-        .then(data => console.log(data))
+        .then(resp => console.log(resp))
+        // this returns a 204 response when the item is deleted. Can use a logic gate to only render next part if this item is deleted.
+
         e.target.parentNode.remove()
     })
     
