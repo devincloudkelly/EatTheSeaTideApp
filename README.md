@@ -10,7 +10,8 @@ Instructions
 - run 'bundle install'
 - launch rails server with 'rails s'
 - open the index page from your terminal with 'open frontend/index.html'
-- Search tides at your favorite placess
+- Search tides at your favorite places to create/read instances of locations and tides (user_locations)
+- Delete instances of tides and locations from the page.
 
 
 ## Challenges
