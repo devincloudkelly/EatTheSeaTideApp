@@ -1,12 +1,189 @@
-.location-card-container{
-    display: block;
+/* font-family: 'Montserrat', sans-serif;
+
+font-family: 'Lora', serif; */
+nav{
+    padding: 5px;
+    background-color: lightseagreen;
+    display: grid;
+    margin: 0px;
+}
+
+h2, h3, ul{
+    font-family: 'Montserrat', sans-serif
+}
+
+h4{
+    font-family: 'Lora', serif;
+}
+
+p, li {
+    font-family: 'Hind Madurai', sans-serif
+}
+
+input, label, select, option, button{
+    font-family: 'Hind Madurai', sans-serif
+}
+
+input{
+    padding: 8px;
+    margin: 5px;
+    
+}
+
+input[type=text]:focus {
+    border: 2px solid rgb(153, 153, 153);
+  }
+
+#location-input{
+    width: 92%;
+}
+
+#lat-input{
+    width: 42%;
+}
+
+#long-input{
+    width: 42%;
+}
+
+select{
+    width: 35%;
+    padding: 30px;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+}
+
+.tide-ul{
+    padding: 3px;
+    margin-bottom: 3px;
+}
+
+#form-submit{
+    color: #fff !important;
+    width: 50%;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #3cced8;
+    padding: 8px;
+    margin: 10px;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    transition: all 0.4s ease 0s;
+}
+
+#tide-input{
+    width: 42%;
+}
+.ul-nav{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    justify-self: center;
+}
+
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-self: center;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 3% 5% auto 5% 3%;
+    grid-template-rows: auto auto;
+    grid-row-gap: 2em;
+    grid-column-gap: 1em;
+    /* font-family: 'Hind Madurai', sans-serif;  */
+    margin-top: 2em;
+}
+
+
+#tide-search {
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    justify-self: center;
+    align-self: start;
+    border-style: solid; 
+    border-width: 4px;
+    border-color: cornflowerblue;
+    border-radius: 12px;
+    padding: 1em;
+}
+
+#location-card-container{
+    grid-column: 2 / 5;
+    grid-row: 2 / 3;
+    font-family: 'Hind Madurai', sans-serif; 
+    /* display: grid; */
+}
+
+#location-div{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    /* grid-template-areas: 
+    "location-card location-card location-card"; */
+    grid-gap: 1em;
+    font-family: 'Hind Madurai', sans-serif; 
 }
 
 .location-card {
+    /* grid-area: location-card; */
+    padding: 5px;
+    border-radius: 6px;
+    border-width: 3px;
     border-style: solid; 
-    border-width: 1px;
     border-color: cornflowerblue;
-    max-width: 30%;
+    justify-self: stretch;
+    align-self: start;
+    /* max-width: 30%;
     min-width: 100px;
-    min-height: 70px;
+    min-height: 70px; */
+    font-family: big-font;
+}
+
+.delete-loc-button{
+    color: #fff !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #ed3330;
+    padding: 8px;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    transition: all 0.4s ease 0s;
+}
+
+.delete-loc-button:hover {
+    background: #434343;
+    letter-spacing: 1px;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;  
+}
+
+.delete-tide-button{
+    color: #fff !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #ed3330;
+    padding: 3px;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    transition: all 0.4s ease 0s;
+}
+
+.delete-tide-button:hover {
+    background: #434343;
+    /* letter-spacing: 1px; */
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    box-shadow: 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.4s ease 0s;  
 }

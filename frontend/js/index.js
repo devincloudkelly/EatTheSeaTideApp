@@ -21,8 +21,7 @@ function tideFormSubmission(e) {
 
 // function to persist location in database if not already there
 function findOrCreateLocation(locName, lat, long, tide, tideHeight){
-    // console.log('3. this is "tide" in Finding or creating by...', tide)
-    fetch(`http://localhost:3000/location`, {
+    fetch(`http://localhost:3000/locations`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -41,19 +40,17 @@ function findOrCreateLocation(locName, lat, long, tide, tideHeight){
 
 // fetch tides for lat and long passed through form
 function fetchTides(json, tide, tideHeight) {
-    console.log('4. this is the json passed in to fetchTides...', json.lat, json.long)
-    return fetch(`http://localhost:3000/tides?lat=${json.lat}&long=${json.long}`) 
+    return fetch(`http://localhost:3000/userlocations?lat=${json.lat}&long=${json.long}`) 
         .then((resp) => resp.json())
-        .then(data => { 
-            let tides = findMatchingTides(data.extremes, tide, tideHeight);
-            persistTides(tides, json.id);
-            makeLocationCard(json.name, json.id, tides);
-        })
+        //add in logic-gate in case data returned is null
+        .then(data => findMatchingTides(data.extremes, tide, tideHeight))
+        .then(tides => {
+            persistTides(tides, json.id)
+            makeLocationCard(json.name, json.id, tides)})
 }
 
 // filter json data to only show tides that match the user's tide height threshold
 function findMatchingTides(json, tide, tideHeight) {
-    console.log('5. this is the json in find matching tides...', json)
 const userTides = json.filter(extreme => extreme.state === tide.split('-').join(' ').toUpperCase())
     if (tide === "low-tide"){
         const lowTides = userTides.filter(tide => tide.height <= tideHeight)
@@ -65,54 +62,56 @@ const userTides = json.filter(extreme => extreme.state === tide.split('-').join(
         console.log('these are high tides', highTides)
         return highTides
     }
-    // need to add use case where no matching tides come back. 
+    // } else {
+    //     alert('Uh-oh, looks like your location is too far from nearby tide data or your tide threshold is too high. \nPlease adjust your search and try again.')
+    // }
 }
 
 // create location card
 function makeLocationCard(locName, locId, tides) {
-    // console.log('making location card...')
-    const locCardContainer = document.querySelector('#location-card-container')
+    const locDiv = document.querySelector('#location-div')
+    
     const div = document.createElement('div')
     div.classList.add('location-card')
     div.id = `loc-${locId}`
+
     const h2 = document.createElement('h2')
     h2.textContent = locName
-    div.appendChild(h2)
-    locCardContainer.appendChild(div)
-    populateTides(tides, locId)
-}
 
-// populates the matching tide instances in a location card
-function populateTides(tides, locId){
-    console.log('this is for populating tides in cards', tides)
-    const tideDiv = document.querySelector(`#loc-${locId}`)
     const h3 = document.createElement('h3')
     h3.textContent = 'Optimal Tides this week: '
-    tideDiv.appendChild(h3)
 
-    tides.forEach(tide => {
-        const ul = document.createElement('ul')
+    //delete button used to delete entire card instance from front and backend
+    const deleteBtn = document.createElement('button')
+    deleteBtn.classList.add('delete-loc-button')
+    deleteBtn.textContent = 'Remove this location'
+    deleteBtn.id = locId
+    deleteBtn.addEventListener('click', (e) => {
+        const cardId = e.target.id
+        console.log('this is cardId', cardId)
+        fetch(`http://localhost:3000/locations/${cardId}`,{
+            method: 'DELETE'
+        })
+        .then(resp => console.log(resp))
+        //this returns a 2-4 if the data is deleted correctly. Can use this to pessimistically render the deletion below
 
-        const seaLevel = document.createElement('li')
-        //remove the metric conversion once tide persistence is in place. leave the 2 decimal fixing.
-        seaLevel.textContent = `Tide Height: ${(tide.height * 3.2808).toFixed(2)}`
-
-        const tideState = document.createElement('li')
-        tideState.textContent = tide.state
-
-        const tideDate = document.createElement('li')
-        tideDate.textContent = new Date(tide.datetime)
-
-        ul.appendChild(seaLevel)
-        ul.appendChild(tideState)
-        ul.appendChild(tideDate)
-        tideDiv.appendChild(ul)
+        const locCard = document.querySelector(`#loc-${cardId}`)
+        console.log('this is locCard', locCard)
+        locCard.remove()
     })
+
+    div.appendChild(h2)
+    div.appendChild(deleteBtn)
+    div.appendChild(h3)
+    locDiv.appendChild(div)
 }
 
+// persist tides to the database
 function persistTides(tides, locId){
-        console.log(tides)
-        fetch('http://localhost:3000/create', {
+    tides.forEach(tide => {
+        console.log
+        const seaLevel = tide.height * 3.2808
+        fetch('http://localhost:3000/userlocations', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -130,5 +129,75 @@ function persistTides(tides, locId){
             })
         })
         .then(resp => resp.json())
-        .then(json => console.log('2. this is the tide persistence response...', json))
+        .then(json => populateTides(json))
+    })
 }
+
+// new populate tides for individual instances
+function populateTides(tide){
+    console.log('this is for populating tides in cards', tide)
+    const tideDiv = document.querySelector(`#loc-${tide.location_id}`)
+    
+    const ul = document.createElement('ul')
+    ul.classList.add('tide-ul')
+    
+    const seaLevel = document.createElement('li')
+    seaLevel.textContent = `Tide Height: ${tide.sea_level.toFixed(2)} feet`
+    
+    const tideState = document.createElement('li')
+    tideState.textContent = tide.state
+    
+    const tideDate = document.createElement('li')
+    tideDate.textContent = new Date(tide.datetime)
+
+    const deleteBtn = document.createElement('button')
+    deleteBtn.classList.add('delete-tide-button')
+    deleteBtn.textContent = 'Remove this tide'
+    deleteBtn.id = tide.id
+    deleteBtn.addEventListener('click', (e) => {
+        const tideId = e.target.id
+        fetch(`http://localhost:3000/userlocations/${tideId}`,{
+            method: 'DELETE'
+        })
+        .then(resp => console.log(resp))
+        // this returns a 204 response when the item is deleted. Can use a logic gate to only render next part if this item is deleted.
+
+        e.target.parentNode.remove()
+    })
+    
+    ul.appendChild(seaLevel)
+    ul.appendChild(tideState)
+    ul.appendChild(tideDate)
+    ul.appendChild(deleteBtn)
+    tideDiv.appendChild(ul)
+}
+
+
+
+// populates the matching tide instances in a location card
+// function populateTides(tides, locId){
+//     console.log('this is for populating tides in cards', tides)
+//     const tideDiv = document.querySelector(`#loc-${locId}`)
+//     const h3 = document.createElement('h3')
+//     h3.textContent = 'Optimal Tides this week: '
+//     tideDiv.appendChild(h3)
+
+//     tides.forEach(tide => {
+//         const ul = document.createElement('ul')
+
+//         const seaLevel = document.createElement('li')
+//         //remove the metric conversion once tide persistence is in place. leave the 2 decimal fixing.
+//         seaLevel.textContent = `Tide Height: ${(tide.height * 3.2808).toFixed(2)}`
+
+//         const tideState = document.createElement('li')
+//         tideState.textContent = tide.state
+
+//         const tideDate = document.createElement('li')
+//         tideDate.textContent = new Date(tide.datetime)
+
+//         ul.appendChild(seaLevel)
+//         ul.appendChild(tideState)
+//         ul.appendChild(tideDate)
+//         tideDiv.appendChild(ul)
+//     })
+// }

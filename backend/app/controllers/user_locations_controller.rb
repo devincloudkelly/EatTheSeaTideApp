@@ -22,4 +22,8 @@ class UserLocationsController < ApplicationController
         # render json: tide
     end
 
+    def destroy
+        UserLocation.destroy(params[:id])
+    end
+
 end
