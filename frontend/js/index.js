@@ -69,7 +69,7 @@ const userTides = json.filter(extreme => extreme.state === tide.split('-').join(
 
 // create location card
 function makeLocationCard(locName, locId, tides) {
-    const locCardContainer = document.querySelector('#location-card-container')
+    const locDiv = document.querySelector('#location-div')
     
     const div = document.createElement('div')
     div.classList.add('location-card')
@@ -103,7 +103,7 @@ function makeLocationCard(locName, locId, tides) {
     div.appendChild(h2)
     div.appendChild(deleteBtn)
     div.appendChild(h3)
-    locCardContainer.appendChild(div)
+    locDiv.appendChild(div)
 }
 
 // persist tides to the database
