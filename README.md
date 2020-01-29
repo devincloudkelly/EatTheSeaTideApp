@@ -25,12 +25,4 @@ To get started, you can use my favotire clamming beach, Belfair State Park:
 
 An ideal tide level for clamming is -1.5 low tide.
 
-
-
-## Challenges
-
-- passing data through url in get request to persist data.
-- adding data persistence after the fact
-- passing several params(pass objects next time)
-- concurrency in databases. (max threads, dynos, workers, timeouts)
-- migrating from sqlite3 to PostgreSQL
+Happy clamming!
