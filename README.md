@@ -5,14 +5,14 @@ Web App that helps users find favorable tides for fishing, crabbing and clam dig
 
 [![Eat the sea app](http://img.youtube.com/vi/lyN_JWtu3pI/0.jpg)](http://www.youtube.com/watch?v=lyN_JWtu3pI "Eat the Sea App")
 
-# Installing
+## Installing ##
 
 - Fork and clone this repository
 - run 'bundle install'
 - launch rails server with 'rails s'
 - open the index page from your terminal with 'open frontend/index.html'
 
-# Operating Instructions 
+## Operating Instructions ##
 
 - Search tides at your favorite places to create/read instances of locations and tides (user_locations)
 - Delete instances of tides and locations from the page.
