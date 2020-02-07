@@ -18,7 +18,7 @@ gem 'puma', '~> 4.1'
 # gem 'bcrypt', '~> 3.1.7'
 # gem 'bootstrap', '~> 4.4.1'
  gem 'rails_12factor', group: :production
-
+gem 'figaro'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

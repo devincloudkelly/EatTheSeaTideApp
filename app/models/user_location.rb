@@ -16,7 +16,7 @@ class UserLocation < ApplicationRecord
 
     request = Net::HTTP::Get.new(url)
     request["x-rapidapi-host"] = 'tides.p.rapidapi.com'
-    request["x-rapidapi-key"] = 'd153400e53msh20cbde97ca23477p1c68eajsn134593973306'
+    request["x-rapidapi-key"] = ENV['x-rapidapi-key']
 
     response = http.request(request)
     return response.read_body
