@@ -3,7 +3,7 @@
 Web App that helps users find favorable tides for fishing, crabbing and clam digging. User inserts the location and desired tide, and receives upcoming favorable tides. 
 
 
-[![Eat the sea app](https://imgur.com/B1P9WrT)
+[![Eat the sea app]](/Users/devinkelly/Flatiron/Mod_3/Week_3/Project/clam-dig-app/public/tide-app-demo-gif.gif)
 
 ## Installing ##
 
