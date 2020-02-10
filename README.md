@@ -13,9 +13,9 @@ Savoring food harvested direct-from-nature is one of my favorite activities, so 
 ## Installing ##
 
 - Fork and clone this repository
-- run 'bundle install'
-- launch rails server with 'rails s'
-- open the index page from your terminal with 'open frontend/index.html'
+- run ```bundle install```
+- launch rails server with ```rails s```
+- open the index page from your terminal with ```open frontend/index.html```
 
 ## Operating Instructions ##
 
