@@ -1,7 +1,7 @@
 # Tide Tracker
-* This single-page web app was designed for fishermen, clammers, crabbers and outdoorspeople. It can:
-    helps users find favorable tides for fishing, crabbing and clam digging.
-    User inserts their location and desired tide, and receives upcoming favorable tides. 
+This single-page web app was designed for fishermen, clammers, crabbers and outdoorspeople. It can:
+   * helps users find favorable tides for fishing, crabbing and clam digging.
+   * User inserts their location and desired tide, and receives upcoming favorable tides. 
 
 
 ![Eat the sea app](public/tide-app-demo-gif.gif)
