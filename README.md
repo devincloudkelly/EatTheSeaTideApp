@@ -1,10 +1,14 @@
 # Tide Tracker
 This single-page web app was designed for fishermen, clammers, crabbers and outdoorspeople. It can:
-   * helps users find favorable tides for fishing, crabbing and clam digging.
-   * User inserts their location and desired tide, and receives upcoming favorable tides. 
+   * Find favorable tides for fishing, crabbing and clam digging, based on user input.
+   * Auto-saves location and tide instances for the user. User can delete either to further filter results.
 
 
 ![Eat the sea app](public/tide-app-demo-gif.gif)
+
+## Why I Made This
+
+Savoring food harvested direct-from-nature is one of my favorite activities, so I wanted to create an app to help me and other outdoors enthusiasts in this pursuit. I also wanted to strengthen my Javascript skills, such as async requests, event handlers and listeners, and controlled forms. On the backend, I learned more about concurrency and data-persistence as I moved from SQLite to Postgresql.
 
 ## Installing ##
 
